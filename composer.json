@@ -1,0 +1,15 @@
+{
+    "name": "crypto-su/trreplace",
+    "autoload": {
+        "psr-4": {
+            "TrSearchAndReplace\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yusuf Erdal",
+            "email": "yusuferdal@outlook.com"
+        }
+    ],
+    "require": {}
+}
