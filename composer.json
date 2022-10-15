@@ -1,5 +1,5 @@
 {
-    "name": "crypto-su/trreplace",
+    "name": "erdalonline/tr-search-and-replace",
     "autoload": {
         "psr-4": {
             "TrSearchAndReplace\\": "src/"
