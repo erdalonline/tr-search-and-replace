@@ -59,11 +59,13 @@ class Replace extends Ekler
             $reIf[] = $this->tr_strtoupper($par);
         }
 
+        //ekler birleştirici
         if ($par == '"' || $par == "'" || $par == "’"){
             $reIf[] = '"';
             $reIf[] = '\'';
             $reIf[] = '’';
             $reIf[] = ' ';
+            $reIf[] = '(?!\s)';
         }
 
         return implode('|', $reIf);
@@ -71,12 +73,16 @@ class Replace extends Ekler
 
     private function str_search_regex($str)
     {
+        //kelime sonu
+        $endOfContentR = '(?![[a-zA-Z0-9ğüşöçİĞÜŞÖÇıI])';
         $str = mb_strtolower($this->tr_strtolower($str), 'UTF-8');
         $regex = '/(';
         foreach (mb_str_split($str) as $c) {
             $regex .= '(?:' . $this->regexCharIf($c) . ')';
         }
+        $regex .= $endOfContentR;
         $regex .= ')/m';
+        echo $regex.PHP_EOL;
         return $regex;
     }
 
