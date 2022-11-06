@@ -74,14 +74,15 @@ class Replace extends Ekler
     private function str_search_regex($str)
     {
         //kelime sonu
-        $endOfContentR = '(?![[a-zA-Z0-9ğüşöçİĞÜŞÖÇıI])';
+        $endOfContentR = '(?=$|[^a-z^A-Z^0-9^ğüşöçİĞÜŞÖÇıI])';
         $str = mb_strtolower($this->tr_strtolower($str), 'UTF-8');
-        $regex = '/\b(';
+        $regex = '/(';
+        $regex .= '((?i)(?<=^|[^a-z])(?=[a-z])|(?<=[a-z])(?=$|[^a-z]))';
         foreach (mb_str_split($str) as $c) {
             $regex .= '(?:' . $this->regexCharIf($c) . ')';
         }
         $regex .= $endOfContentR;
-        $regex .= ')\b/m';
+        $regex .= ')/m';
         return $regex;
     }
 
