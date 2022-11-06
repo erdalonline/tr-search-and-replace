@@ -76,12 +76,13 @@ class Replace extends Ekler
         //kelime sonu
         $endOfContentR = '(?![[a-zA-Z0-9ğüşöçİĞÜŞÖÇıI])';
         $str = mb_strtolower($this->tr_strtolower($str), 'UTF-8');
-        $regex = '/(';
+        $regex = '/\b(';
         foreach (mb_str_split($str) as $c) {
             $regex .= '(?:' . $this->regexCharIf($c) . ')';
         }
         $regex .= $endOfContentR;
-        $regex .= ')/m';
+        $regex .= ')\b/m';
+        echo $regex.PHP_EOL;
         return $regex;
     }
 
