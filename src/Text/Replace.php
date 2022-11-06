@@ -82,7 +82,6 @@ class Replace extends Ekler
         }
         $regex .= $endOfContentR;
         $regex .= ')/m';
-        echo $regex.PHP_EOL;
         return $regex;
     }
 
