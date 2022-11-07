@@ -73,15 +73,22 @@ class Replace extends Ekler
 
     private function str_search_regex($str)
     {
+        $trCharacter = 'ÇçĞğİıIÖöŞşÜü';
         //kelime sonu
+        //$endOfContentR = '(?=$|[^a-z^A-Z^0-9^ğüşöçİĞÜŞÖÇıI])';
         $endOfContentR = '(?=$|[^a-z^A-Z^0-9^ğüşöçİĞÜŞÖÇıI])';
         $str = mb_strtolower($this->tr_strtolower($str), 'UTF-8');
+        $startOfEndRegex = '((?i)(?<=^|[^a-z^'.$trCharacter.'])(?=[a-z'.$trCharacter.'])|(?<=[a-z'.$trCharacter.'])(?=$|[^a-z'.$trCharacter.']))';
+
         $regex = '/(';
+        /*
         $regex .= '((?i)(?<=^|[^a-z])(?=[a-z])|(?<=[a-z])(?=$|[^a-z]))';
+        */
+        $regex .= $startOfEndRegex;
         foreach (mb_str_split($str) as $c) {
             $regex .= '(?:' . $this->regexCharIf($c) . ')';
         }
-        $regex .= $endOfContentR;
+        $regex .= $startOfEndRegex;
         $regex .= ')/m';
         return $regex;
     }
