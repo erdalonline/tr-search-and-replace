@@ -72,6 +72,9 @@ class Replace extends Ekler
         if ($par == ' '){
             $reIf[] = '(?:\s)';
         }
+        if (!isset($reIf)){
+            $reIf[] = $par;
+        }
 
         return implode('|', $reIf);
     }
