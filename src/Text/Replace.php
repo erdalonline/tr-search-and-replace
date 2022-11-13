@@ -21,20 +21,22 @@ class Replace extends Ekler
         return mb_strtoupper($tr, 'UTF-8');
     }
 
-    private function parseWords($text, $search, $replace){
+    private function parseWords($text, $search, $replace, $trEkler){
         $search = trim($search);
-        $search = explode(' ', $search);
-
-        if (is_array($search)){
-            foreach ($search as $c){
-                $variant = $this->all($c);
-                foreach ($variant as $ek => $value){
-                    $regex =  $this->str_search_regex($value);
-                    $text = preg_replace($regex, $this->isim($replace)->$ek(), $text);
+        if ($trEkler){
+            $search = explode(' ', $search);
+            if (is_array($search)){
+                foreach ($search as $c){
+                    $variant = $this->all($c);
+                    foreach ($variant as $ek => $value){
+                        $regex =  $this->str_search_regex($value);
+                        $text = preg_replace($regex, $this->isim($replace)->$ek(), $text);
+                    }
+                    $text = preg_replace($this->str_search_regex($c), $replace, $text);
                 }
-                $text = preg_replace($this->str_search_regex($c), $replace, $text);
             }
-
+        }else{
+            $text = preg_replace($this->str_search_regex($search), $replace, $text);
         }
 
         return $text;
@@ -67,6 +69,9 @@ class Replace extends Ekler
             $reIf[] = ' ';
             $reIf[] = '(?!\s)';
         }
+        if ($par == ' '){
+            $reIf[] = '(?:\s)';
+        }
 
         return implode('|', $reIf);
     }
@@ -74,9 +79,6 @@ class Replace extends Ekler
     private function str_search_regex($str)
     {
         $trCharacter = 'ÇçĞğİıIÖöŞşÜü';
-        //kelime sonu
-        //$endOfContentR = '(?=$|[^a-z^A-Z^0-9^ğüşöçİĞÜŞÖÇıI])';
-        $endOfContentR = '(?=$|[^a-z^A-Z^0-9^ğüşöçİĞÜŞÖÇıI])';
         $str = mb_strtolower($this->tr_strtolower($str), 'UTF-8');
         $startOfEndRegex = '((?i)(?<=^|[^a-z^'.$trCharacter.'])(?=[a-z'.$trCharacter.'])|(?<=[a-z'.$trCharacter.'])(?=$|[^a-z'.$trCharacter.']))';
 
@@ -93,9 +95,11 @@ class Replace extends Ekler
         return $regex;
     }
 
-    public function searchAndReplace($text, $search, $replace)
+    public function searchAndReplace($text, $search, $replace, $trEkler = true)
     {
-        return $this->parseWords($text, $search, $replace);
+        return $this->parseWords($text, $search, $replace, $trEkler);
     }
+
+
 
 }

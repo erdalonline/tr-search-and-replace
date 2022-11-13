@@ -10,8 +10,8 @@ echo $regex->searchAndReplace("Bugün yemeği istAnbUl da yiyeceğim", 'istanbul
 */
 
 $content = <<<TEXT
-İstanbul'dan 
+AHMET REMZİ YÜREĞİR Mahallesi
 TEXT;
 
 
-echo $regex->searchAndReplace($content, 'istanbul', 'Sivas');
+echo $regex->searchAndReplace($content, 'AHMET REMZİ YÜREĞİR', 'Sivas', false);
